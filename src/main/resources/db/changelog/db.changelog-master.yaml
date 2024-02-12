@@ -1,7 +1,12 @@
 databaseChangeLog:
   - changeSet:
       id: 1
-      author: your_name
+      author: ryan.silberstorf
+      preConditions:
+        onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'potus_db' AND table_name = 'presidents'
       changes:
         - createTable:
             tableName: presidents
@@ -21,5 +26,29 @@ databaseChangeLog:
               - column:
                   name: last_name
                   type: varchar(255)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 2
+      author: ryan.silberstorf
+      preConditions:
+        onFail: MARK_RAN
+      changes:
+        - addColumn:
+            tableName: presidents
+            columns:
+              - column:
+                  name: is_living
+                  type: TINYINT(1)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: terms_served
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: years_served
+                  type: INT
                   constraints:
                     nullable: false

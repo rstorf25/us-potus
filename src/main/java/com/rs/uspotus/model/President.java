@@ -3,60 +3,78 @@ package com.rs.uspotus.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
-import java.io.Serializable;
+import java.util.Objects;
+
 
 @Entity
 @Table(name = "presidents")
-public class President implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "first_name")
-    @JsonProperty("first_name")
-    private String firstName;
-    @Column(name = "last_name")
-    @JsonProperty("last_name")
-    private String lastName;
+public class President extends Person {
+    @Column(name = "terms_served")
+    @JsonProperty("terms_served")
+    private Long termsServed;
+
+    @Column(name = "years_served")
+    @JsonProperty("years_served")
+    private Long yearsServed;
 
     public President() {
     }
 
-    public President(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public President(String firstName, String lastName, boolean isLiving, Long termsServed, Long yearsServed) {
+        super(firstName, lastName, isLiving);
+        this.termsServed = termsServed;
+        this.yearsServed = yearsServed;
     }
 
-    public Long getId() {
-        return id;
+
+    public Long getTermsServed() {
+        return termsServed;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTermsServed(Long termsServed) {
+        this.termsServed = termsServed;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public Long getYearsServed() {
+        return yearsServed;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setYearsServed(Long yearsServed) {
+        this.yearsServed = yearsServed;
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        President president = (President) o;
+
+        if (!Objects.equals(termsServed, president.termsServed))
+            return false;
+        return Objects.equals(yearsServed, president.yearsServed);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (termsServed != null ? termsServed.hashCode() : 0);
+        result = 31 * result + (yearsServed != null ? yearsServed.hashCode() : 0);
+        return result;
+    }
+    @Override
     public String toString() {
         return "President{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                "id=" + getId() +
+                ", firstName='" + getFirstName() + '\'' +
+                ", lastName='" + getLastName() + '\'' +
+                ", isLiving=" + isLiving() +
+                ", termsServed=" + termsServed +
+                ", yearsServed=" + yearsServed +
                 '}';
     }
+
+
 
 }
