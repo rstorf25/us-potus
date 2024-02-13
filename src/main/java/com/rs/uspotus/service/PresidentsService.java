@@ -20,8 +20,16 @@ public class PresidentsService {
         return presidentsRepository.save(president);
     }
 
+    public President updatePresident(President president) {
+        return presidentsRepository.save(president);
+    }
+
     public Iterable<President> getAllPresidents() {
         return presidentsRepository.findAll();
+    }
+
+    public Optional<President> getPresidentById(Integer id) {
+        return presidentsRepository.findById(id);
     }
 
     public Optional<President> findPresidentById(Integer id) {
