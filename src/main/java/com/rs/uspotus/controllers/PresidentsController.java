@@ -2,6 +2,7 @@ package com.rs.uspotus.controllers;
 
 import com.rs.uspotus.model.President;
 import com.rs.uspotus.service.PresidentsService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class PresidentsController {
     }
 
     @PostMapping
-    public ResponseEntity<President> addPresident(@RequestBody President president) {
+    public ResponseEntity<President> addPresident(@Valid @RequestBody President president) {
         President newPresident = presidentsService.addPresident(president);
         return ResponseEntity.status(HttpStatus.CREATED).body(newPresident);
     }
@@ -31,7 +32,7 @@ public class PresidentsController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<President> updatePresident(@PathVariable Integer id, @RequestBody President updatedPresident) {
+    public ResponseEntity<President> updatePresident(@Valid @PathVariable Integer id, @RequestBody President updatedPresident) {
         if (updatedPresident.getId() != id.longValue()) {
             return ResponseEntity.badRequest().build();
         }

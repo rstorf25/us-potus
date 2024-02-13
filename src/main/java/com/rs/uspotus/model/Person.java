@@ -3,6 +3,8 @@ package com.rs.uspotus.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Objects;
 
@@ -10,12 +12,17 @@ import java.util.Objects;
 public abstract class Person extends BaseEntity {
     @Column(name = "first_name")
     @JsonProperty("first_name")
+    @NotNull
+    @NotEmpty
     private String firstName;
     @Column(name = "last_name")
+    @NotNull
+    @NotEmpty
     @JsonProperty("last_name")
     private String lastName;
     @Column(name = "is_living")
     @JsonProperty("is_living")
+    @NotNull(message = "is_living can't be null")
     private boolean isLiving;
 
     protected Person() {
