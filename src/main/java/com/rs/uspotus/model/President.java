@@ -2,6 +2,8 @@ package com.rs.uspotus.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 import java.util.Objects;
 
@@ -11,10 +13,14 @@ import java.util.Objects;
 public class President extends Person {
     @Column(name = "terms_served")
     @JsonProperty("terms_served")
+    @Positive
+    @NotNull
     private Long termsServed;
 
     @Column(name = "years_served")
     @JsonProperty("years_served")
+    @Positive
+    @NotNull
     private Long yearsServed;
 
     public President() {
