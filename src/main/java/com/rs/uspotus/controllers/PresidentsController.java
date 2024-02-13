@@ -30,6 +30,27 @@ public class PresidentsController {
         return ResponseEntity.ok(presidents);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<President> updatePresident(@PathVariable Integer id, @RequestBody President updatedPresident) {
+        if (updatedPresident.getId() != id.longValue()) {
+            return ResponseEntity.badRequest().build();
+        }
+        Optional<President> presidentOptional = presidentsService.findPresidentById(id);
+        if (presidentOptional.isPresent()) {
+            President updatedPres = presidentsService.updatePresident(updatedPresident);
+            return ResponseEntity.ok(updatedPres);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<President> getPresidentById(@PathVariable Integer id) {
+        Optional<President> optPres = presidentsService.getPresidentById(id);
+        return optPres.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePresident(@PathVariable Integer id) {
         Optional<President> presidentOptional = presidentsService.findPresidentById(id);
