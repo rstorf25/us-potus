@@ -7,7 +7,7 @@ import jakarta.persistence.MappedSuperclass;
 import java.util.Objects;
 
 @MappedSuperclass
-public class Person extends BaseEntity {
+public abstract class Person extends BaseEntity {
     @Column(name = "first_name")
     @JsonProperty("first_name")
     private String firstName;
@@ -18,10 +18,10 @@ public class Person extends BaseEntity {
     @JsonProperty("is_living")
     private boolean isLiving;
 
-    public Person() {
+    protected Person() {
     }
 
-    public Person(String firstName, String lastName, boolean isLiving) {
+    protected Person(String firstName, String lastName, boolean isLiving) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.isLiving = isLiving;
