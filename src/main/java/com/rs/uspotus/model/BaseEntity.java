@@ -19,4 +19,7 @@ public abstract class BaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    protected BaseEntity(Long id) {
+    }
+    protected BaseEntity(){}
 }

@@ -12,6 +12,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
+
 @MappedSuperclass
 public abstract class Person extends BaseEntity {
     @Column(name = "first_name")
@@ -34,7 +35,8 @@ public abstract class Person extends BaseEntity {
     protected Person() {
     }
 
-    protected Person(String firstName, String lastName, boolean isLiving) {
+    protected Person(Long id, String firstName, String lastName, boolean isLiving) {
+        super(id);
         this.firstName = firstName;
         this.lastName = lastName;
         this.isLiving = isLiving;
