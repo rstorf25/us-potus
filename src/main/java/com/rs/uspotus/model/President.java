@@ -30,8 +30,8 @@ public class President extends Person {
     public President() {
     }
 
-    public President(String firstName, String lastName, boolean isLiving, Long termsServed, Long yearsServed) {
-        super(firstName, lastName, isLiving);
+    public President(Long id, String firstName, String lastName, boolean isLiving, Long termsServed, Long yearsServed) {
+        super(id, firstName, lastName, isLiving);
         this.termsServed = termsServed;
         this.yearsServed = yearsServed;
     }
