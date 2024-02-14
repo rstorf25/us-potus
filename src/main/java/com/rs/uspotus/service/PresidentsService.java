@@ -28,15 +28,11 @@ public class PresidentsService {
         return presidentsRepository.findAll();
     }
 
-    public Optional<President> getPresidentById(Integer id) {
+    public Optional<President> getPresidentById(Long id) {
         return presidentsRepository.findById(id);
     }
 
-    public Optional<President> findPresidentById(Integer id) {
-        return presidentsRepository.findById(id);
-    }
-
-    public void removePresidentById(Integer id) {
+    public void removePresidentById(Long id) {
         presidentsRepository.deleteById(id);
     }
 
