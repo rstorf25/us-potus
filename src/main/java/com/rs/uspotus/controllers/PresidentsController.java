@@ -32,11 +32,11 @@ public class PresidentsController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<President> updatePresident(@Valid @PathVariable Integer id, @RequestBody President updatedPresident) {
-        if (updatedPresident.getId() != id.longValue()) {
+    public ResponseEntity<President> updatePresident(@Valid @PathVariable Long id, @RequestBody President updatedPresident) {
+        if (updatedPresident.getId().equals(id)) {
             return ResponseEntity.badRequest().build();
         }
-        Optional<President> presidentOptional = presidentsService.findPresidentById(id);
+        Optional<President> presidentOptional = presidentsService.getPresidentById(id);
         if (presidentOptional.isPresent()) {
             President updatedPres = presidentsService.updatePresident(updatedPresident);
             return ResponseEntity.ok(updatedPres);
@@ -46,15 +46,15 @@ public class PresidentsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<President> getPresidentById(@PathVariable Integer id) {
+    public ResponseEntity<President> getPresidentById(@PathVariable Long id) {
         Optional<President> optPres = presidentsService.getPresidentById(id);
         return optPres.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePresident(@PathVariable Integer id) {
-        Optional<President> presidentOptional = presidentsService.findPresidentById(id);
+    public ResponseEntity<Void> deletePresident(@PathVariable Long id) {
+        Optional<President> presidentOptional = presidentsService.getPresidentById(id);
         if (presidentOptional.isPresent()) {
             presidentsService.removePresidentById(id);
             return ResponseEntity.noContent().build();
