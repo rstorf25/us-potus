@@ -4,10 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Objects;
 
 
+@Setter
+@Getter
 @Entity
 @Table(name = "presidents")
 public class President extends Person {
@@ -33,22 +37,6 @@ public class President extends Person {
     }
 
 
-    public Long getTermsServed() {
-        return termsServed;
-    }
-
-    public void setTermsServed(Long termsServed) {
-        this.termsServed = termsServed;
-    }
-
-    public Long getYearsServed() {
-        return yearsServed;
-    }
-
-    public void setYearsServed(Long yearsServed) {
-        this.yearsServed = yearsServed;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,6 +57,7 @@ public class President extends Person {
         result = 31 * result + (yearsServed != null ? yearsServed.hashCode() : 0);
         return result;
     }
+
     @Override
     public String toString() {
         return "President{" +
@@ -80,7 +69,6 @@ public class President extends Person {
                 ", yearsServed=" + yearsServed +
                 '}';
     }
-
 
 
 }

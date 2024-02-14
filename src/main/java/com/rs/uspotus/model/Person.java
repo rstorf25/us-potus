@@ -5,9 +5,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Objects;
 
+@Getter
+@Setter
 @MappedSuperclass
 public abstract class Person extends BaseEntity {
     @Column(name = "first_name")
@@ -15,11 +19,13 @@ public abstract class Person extends BaseEntity {
     @NotNull
     @NotEmpty
     private String firstName;
+
     @Column(name = "last_name")
     @NotNull
     @NotEmpty
     @JsonProperty("last_name")
     private String lastName;
+
     @Column(name = "is_living")
     @JsonProperty("is_living")
     @NotNull(message = "is_living can't be null")
@@ -32,30 +38,6 @@ public abstract class Person extends BaseEntity {
         this.firstName = firstName;
         this.lastName = lastName;
         this.isLiving = isLiving;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public boolean isLiving() {
-        return isLiving;
-    }
-
-    public void setLiving(boolean living) {
-        isLiving = living;
     }
 
     @Override
