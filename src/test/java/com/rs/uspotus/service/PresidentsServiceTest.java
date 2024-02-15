@@ -17,8 +17,11 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PresidentsServiceTest {
-    President testPresident1 = new President(1L, "Abe", "Lincoln", false, 1L, 4L);
-    President testPresident2 = new President(2L, "Joe", "Biden", true, 1L, 4L);
+    Long PRES_ID = 1L;
+    Long TERM_SERVED = 1L;
+    President testPresident1 = new President(PRES_ID, "Abe", "Lincoln", false, TERM_SERVED, 4L);
+    President testPresident2 = new President(2L, "Joe", "Biden", true, TERM_SERVED, 4L);
+
 
     @Mock
     private PresidentsRepository presidentsRepository;
@@ -51,21 +54,25 @@ class PresidentsServiceTest {
 
     @Test
     void getPresidentByIdTest() {
-        Long presId = 1L;
         String expectedPresName = "Abe";
-        when(presidentsRepository.findById(presId)).thenReturn(Optional.ofNullable(testPresident1));
+        when(presidentsRepository.findById(PRES_ID)).thenReturn(Optional.ofNullable(testPresident1));
 
-        Optional<President> getPres = presidentsService.getPresidentById(presId);
+        Optional<President> getPres = presidentsService.getPresidentById(PRES_ID);
 
         assertTrue(getPres.isPresent());
         assertEquals(expectedPresName, getPres.get().getFirstName());
-        verify(presidentsRepository, times(1)).findById(presId);
+        verify(presidentsRepository, times(1)).findById(PRES_ID);
     }
 
-    //    @Test
-//    void removePresidentById() {
-//
-//    }
+    @Test
+    void removePresidentByIdTest() {
+        doNothing().when(presidentsRepository).deleteById(PRES_ID);
+
+        presidentsService.removePresidentById(PRES_ID);
+
+        verify(presidentsRepository, times(1)).deleteById(PRES_ID);
+
+    }
 }
 
 
