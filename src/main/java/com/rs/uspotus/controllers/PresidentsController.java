@@ -33,16 +33,10 @@ public class PresidentsController {
 
     @PutMapping("/{id}")
     public ResponseEntity<President> updatePresident(@Valid @PathVariable Long id, @RequestBody President updatedPresident) {
-        if (updatedPresident.getId().equals(id)) {
+        if (!updatedPresident.getId().equals(id)) {
             return ResponseEntity.badRequest().build();
         }
-        Optional<President> presidentOptional = presidentsService.getPresidentById(id);
-        if (presidentOptional.isPresent()) {
-            President updatedPres = presidentsService.updatePresident(updatedPresident);
-            return ResponseEntity.ok(updatedPres);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return presidentsService.updatePresident(id, updatedPresident);
     }
 
     @GetMapping("/{id}")
