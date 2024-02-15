@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -26,7 +27,7 @@ class PresidentsServiceTest {
     private PresidentsService presidentsService;
 
     @Test
-    void addPresident() {
+    void addPresidentTest() {
 
         when(presidentsRepository.save(any())).thenReturn(testPresident1);
 
@@ -38,7 +39,7 @@ class PresidentsServiceTest {
 
 
     @Test
-    void getAllPresidents() {
+    void getAllPresidentsTest() {
         List<President> presidents = Arrays.asList(testPresident1, testPresident2);
         when(presidentsRepository.findAll()).thenReturn(presidents);
 
@@ -48,12 +49,26 @@ class PresidentsServiceTest {
         verify(presidentsRepository, times(1)).findAll();
     }
 
-//    @Test
-//    public void testGetById() {
-//    }
-//
-//    @Test
+    @Test
+    void getPresidentByIdTest() {
+        Long presId = 1L;
+        String expectedPresName = "Abe";
+        when(presidentsRepository.findById(presId)).thenReturn(Optional.ofNullable(testPresident1));
+
+        Optional<President> getPres = presidentsService.getPresidentById(presId);
+
+        assertTrue(getPres.isPresent());
+        assertEquals(expectedPresName, getPres.get().getFirstName());
+        verify(presidentsRepository, times(1)).findById(presId);
+    }
+
+    //    @Test
 //    void removePresidentById() {
 //
 //    }
 }
+
+
+
+
+
